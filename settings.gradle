@@ -1,0 +1,3 @@
+rootProject.name = 'Spring-cloud-test-app'
+
+include 'configserver'
