@@ -2,3 +2,4 @@ rootProject.name = 'Spring-cloud-test-app'
 
 include 'configserver'
 include 'license-service'
+include 'eurekaserver'
