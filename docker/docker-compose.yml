@@ -32,6 +32,20 @@ services:
       backend:
         aliases:
           - "configserver"
+  eurekaserver:
+    container_name: "eureka_server"
+    image: com.anradev/eurekaserver:0.0.1-SNAPSHOT
+    ports:
+      - "8070:8070"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "eurekaserver"
   license-service:
     container_name: "license_service"
     image: com.anradev/license-service:0.0.1-SNAPSHOT
