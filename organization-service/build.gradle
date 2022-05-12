@@ -44,3 +44,7 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootBuildImage{
+	imageName = "${project.group}/${project.name}:${project.version}"
+}
