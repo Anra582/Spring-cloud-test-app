@@ -5,11 +5,20 @@ import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.LicenseRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class LicenseService {
@@ -25,6 +34,8 @@ public class LicenseService {
 
     @Autowired
     OrganizationFeignClient organizationFeignClient;
+
+    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
 
     public License getLicense(String licenseId, String organizationId){
@@ -71,5 +82,25 @@ public class LicenseService {
         responseMessage = String.format(messages.getMessage("license.delete.message", null, null),licenseId);
         return responseMessage;
 
+    }
+
+    @CircuitBreaker(name = "licenseService")
+    public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
+        randomlyRunLong();
+        return licenseRepository.findByOrganizationId(organizationId);
+    }
+
+    private void randomlyRunLong() throws TimeoutException{
+        Random rand = new Random();
+        int randomNum = rand.nextInt(3) + 1;
+        if (randomNum==3) sleep();
+    }
+    private void sleep() throws TimeoutException{
+        try {
+            Thread.sleep(5000);
+            throw new java.util.concurrent.TimeoutException();
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
     }
 }
