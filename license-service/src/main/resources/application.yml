@@ -6,6 +6,12 @@ spring:
   config:
     import: optional:configserver:http://configserver:8071
 
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.anradev: DEBUG
+
 resilience4j:
   circuitbreaker:
     instances:
