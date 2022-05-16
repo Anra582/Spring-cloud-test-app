@@ -5,6 +5,7 @@ import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.LicenseRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
+import com.anradev.licenseservice.utils.UserContextHolder;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -87,6 +88,7 @@ public class LicenseService {
 
     @CircuitBreaker(name = "licenseService", fallbackMethod= "buildFallbackLicenseList")
     @Bulkhead(name = "bulkheadLicenseService", fallbackMethod= "buildFallbackLicenseList")
+    @RateLimiter(name = "licenseService", fallbackMethod= "buildFallbackLicenseList")
     @Retry(name = "retryLicenseService", fallbackMethod= "buildFallbackLicenseList")
     public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
         randomlyRunLong();
