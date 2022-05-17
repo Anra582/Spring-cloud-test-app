@@ -1,0 +1,1 @@
+Just a test project for learning Spring Cloud features
