@@ -1,11 +1,15 @@
 spring:
   application:
     name: config-server
+  profiles:
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: file:///${user.home}/IdeaProjects/anra-dev/Spring-cloud-test-app/configserver
+        native:
+          search-locations:
+            - classpath:/config
+            - /app/config
 
 server:
   port: 8071
