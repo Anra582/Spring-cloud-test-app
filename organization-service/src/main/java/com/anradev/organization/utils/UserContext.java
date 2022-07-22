@@ -27,8 +27,8 @@ public class UserContext {
     public static String getUserId() { return userId.get(); }
     public static void setUserId(String aUser) {userId.set(aUser);}
 
-    public static String getOrgId() { return organizationId.get(); }
-    public static void setOrgId(String aOrg) {organizationId.set(aOrg);}
+    public static String getOrganizationId() { return organizationId.get(); }
+    public static void setOrganizationId(String aOrg) {organizationId.set(aOrg);}
 
     public static HttpHeaders getHttpHeaders(){
         HttpHeaders httpHeaders = new HttpHeaders();
