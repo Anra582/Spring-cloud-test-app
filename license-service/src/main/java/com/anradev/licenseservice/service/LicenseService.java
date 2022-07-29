@@ -4,8 +4,9 @@ import com.anradev.licenseservice.config.ServiceConfig;
 import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.LicenseRepository;
+import com.anradev.licenseservice.repository.OrganizationRedisRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
-import com.anradev.licenseservice.utils.UserContextHolder;
+import com.anradev.licenseservice.utils.UserContext;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -32,6 +33,9 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
     @Autowired
+    private OrganizationRedisRepository organizationRedisRepository;
+
+    @Autowired
     ServiceConfig config;
 
     @Autowired
@@ -46,7 +50,7 @@ public class LicenseService {
             throw new IllegalArgumentException(String.format(messages.getMessage("license.search.error.message", null, null),licenseId, organizationId));
         }
 
-        Organization organization = retrieveOrganizationInfo(organizationId);
+        Organization organization = getOrganization(organizationId);
         if (null != organization) {
             license.setOrganizationName(organization.getName());
             license.setContactName(organization.getContactName());
@@ -54,26 +58,52 @@ public class LicenseService {
             license.setContactPhone(organization.getContactPhone());
         }
 
-        return license.withComment(config.getProperty());
+        return license.withComment(config.getExampleProperty());
+    }
+
+    public Organization getOrganization(String organizationId) {
+        logger.debug("In Licensing Service.getOrganization: {}", UserContext.getCorrelationId());
+
+        Organization organization = checkRedisCache(organizationId);
+
+        if (organization != null){
+            logger.debug("I have successfully retrieved an organization {} from the redis cache: {}", organizationId, organization);
+            return organization;
+        }
+
+        logger.debug("Unable to locate organization from the redis cache: {}.", organizationId);
+
+        organization = retrieveOrganizationInfo(organizationId);
+
+        if (organization != null) {
+            cacheOrganizationObject(organization);
+        }
+        return organization;
     }
 
     private Organization retrieveOrganizationInfo(String organizationId) {
-        Organization organization = organizationFeignClient.getOrganization(organizationId);
+        return organizationFeignClient.getOrganization(organizationId);
+    }
 
-        return organization;
+    private Organization checkRedisCache(String organizationId) {
+        return null;
+    }
+
+    private void cacheOrganizationObject(Organization organization) {
+
     }
 
     public License createLicense(License license){
         license.setLicenseId(UUID.randomUUID().toString());
         licenseRepository.save(license);
 
-        return license.withComment(config.getProperty());
+        return license.withComment(config.getExampleProperty());
     }
 
     public License updateLicense(License license){
         licenseRepository.save(license);
 
-        return license.withComment(config.getProperty());
+        return license.withComment(config.getExampleProperty());
     }
 
     public String deleteLicense(String licenseId){
