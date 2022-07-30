@@ -33,7 +33,7 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
     @Autowired
-    private OrganizationRedisRepository organizationRedisRepository;
+    private OrganizationRedisRepository<Organization> organizationRedisRepository;
 
     @Autowired
     ServiceConfig config;
@@ -86,11 +86,11 @@ public class LicenseService {
     }
 
     private Organization checkRedisCache(String organizationId) {
-        return null;
+        return organizationRedisRepository.find("Organization", organizationId, Organization.class);
     }
 
     private void cacheOrganizationObject(Organization organization) {
-
+        organizationRedisRepository.add("Organization", organization.getId(), organization);
     }
 
     public License createLicense(License license){
