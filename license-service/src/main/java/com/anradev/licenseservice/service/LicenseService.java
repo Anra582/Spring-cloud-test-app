@@ -3,6 +3,7 @@ package com.anradev.licenseservice.service;
 import com.anradev.licenseservice.config.ServiceConfig;
 import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
+import com.anradev.licenseservice.repository.DataCacheRepository;
 import com.anradev.licenseservice.repository.LicenseRepository;
 import com.anradev.licenseservice.repository.OrganizationRedisRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
@@ -14,6 +15,7 @@ import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,8 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
     @Autowired
-    private OrganizationRedisRepository<Organization> organizationRedisRepository;
+    @Qualifier("OrganizationRedisRepository")
+    private DataCacheRepository<Organization> organizationRedisRepository;
 
     @Autowired
     ServiceConfig config;

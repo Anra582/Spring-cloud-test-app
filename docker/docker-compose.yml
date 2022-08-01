@@ -80,6 +80,11 @@ services:
       backend:
         aliases:
           - "zookeeper"
+    healthcheck:
+      test: "nc -z localhost 2181 || exit -1"
+      interval: 10s
+      timeout: 5s
+      retries: 3
   kafkaserver:
     container_name: "kafka_server"
     image: bitnami/kafka:3.1.1
@@ -94,7 +99,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     networks:
       backend:
         aliases:
