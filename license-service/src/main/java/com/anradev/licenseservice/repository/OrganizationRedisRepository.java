@@ -18,7 +18,7 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
     @Autowired
-    RedisTemplate redisTemplate;
+    RedisTemplate<String, String> redisTemplate;
 
     private static final ObjectMapper OBJECT_MAPPER;
     private static final TimeZone DEFAULT_TIMEZONE = TimeZone.getTimeZone("UTC");
