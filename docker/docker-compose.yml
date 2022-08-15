@@ -154,7 +154,7 @@ services:
     image: docker.elastic.co/logstash/logstash:7.7.0
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
-      - ./config:/etc/logstash/conf.d
+      - ./config/logstash.conf:/etc/logstash/conf.d/logstash.conf
     ports:
       - "5000:5000"
     networks:
@@ -162,8 +162,8 @@ services:
         aliases:
           - "logstash"
   zipkin:
-    image: openzipkin/zipkin:2.23.18
     container_name: zipkin
+    image: openzipkin/zipkin:2.23.18
     depends_on:
       - elasticsearch
     environment:
@@ -175,6 +175,26 @@ services:
       backend:
         aliases:
           - "zipkin"
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.37.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      backend:
+        aliases:
+          - "prometheus"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.0.7
+    ports:
+      - "3000:3000"
+    networks:
+      backend:
+        aliases:
+          - "grafana"
   license-service:
     container_name: "license_service"
     image: com.anradev/license-service:0.0.1-SNAPSHOT
