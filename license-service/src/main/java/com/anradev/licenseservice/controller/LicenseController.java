@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -24,6 +25,7 @@ public class LicenseController {
     @Autowired
     private LicenseService licenseService;
 
+    @RolesAllowed({"ADMIN", "USER"})
     @RequestMapping(value="/{licenseId}",method = RequestMethod.GET)
     public ResponseEntity<License> getLicense(@PathVariable("organizationId") String organizationId,
                                               @PathVariable("licenseId") String licenseId) {
@@ -39,21 +41,25 @@ public class LicenseController {
         return ResponseEntity.ok(license);
     }
 
+    @RolesAllowed({"ADMIN", "USER"})
     @PutMapping
     public ResponseEntity<License> updateLicense(@RequestBody License request) {
         return ResponseEntity.ok(licenseService.updateLicense(request));
     }
 
+    @RolesAllowed({"ADMIN", "USER"})
     @PostMapping
     public ResponseEntity<License> createLicense(@RequestBody License request) {
         return ResponseEntity.ok(licenseService.createLicense(request));
     }
 
+    @RolesAllowed({"ADMIN"})
     @DeleteMapping(value="/{licenseId}")
     public ResponseEntity<String> deleteLicense(@PathVariable("licenseId") String licenseId) {
         return ResponseEntity.ok(licenseService.deleteLicense(licenseId));
     }
 
+    @RolesAllowed({"ADMIN", "USER"})
     @RequestMapping(value="/",method = RequestMethod.GET)
     public List<License> getLicenses(@PathVariable("organizationId") String organizationId) throws TimeoutException {
         logger.debug("LicenseServiceController Correlation id: {}", UserContextHolder.getContext().getCorrelationId());

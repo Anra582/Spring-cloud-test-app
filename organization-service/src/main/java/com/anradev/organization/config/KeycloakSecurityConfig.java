@@ -1,7 +1,5 @@
 package com.anradev.organization.config;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.authorizeRequests()
                 .anyRequest().authenticated();
-//        http.csrf().disable(); //For what?! Remove that after testing security
+        http.csrf().disable(); //TODO make sure that csrf disabled only to testing purposes. Fix that
     }
 
     @Autowired

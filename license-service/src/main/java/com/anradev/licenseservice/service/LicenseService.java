@@ -5,8 +5,8 @@ import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.DataCacheRepository;
 import com.anradev.licenseservice.repository.LicenseRepository;
-import com.anradev.licenseservice.repository.OrganizationRedisRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
+import com.anradev.licenseservice.service.client.OrganizationRestClient;
 import com.anradev.licenseservice.utils.UserContext;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -43,6 +43,9 @@ public class LicenseService {
 
     @Autowired
     OrganizationFeignClient organizationFeignClient;
+
+    @Autowired
+    OrganizationRestClient organizationRestClient;
 
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
@@ -85,7 +88,8 @@ public class LicenseService {
     }
 
     private Organization retrieveOrganizationInfo(String organizationId) {
-        return organizationFeignClient.getOrganization(organizationId);
+//        return organizationFeignClient.getOrganization(organizationId);
+        return organizationRestClient.getOrganization(organizationId);
     }
 
     private Organization checkRedisCache(String organizationId) {
