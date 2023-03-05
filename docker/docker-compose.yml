@@ -1,39 +1,37 @@
 version: '2.1'
 services:
   database:
-    container_name: "postgres_db"
+    container_name: postgres_db
     image: postgres:14-alpine3.15
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB:       "cloud_test_db"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cloud_test_db
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
       - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
     networks:
       backend:
         aliases:
-          - "database"
+          - database
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
   configserver:
-    container_name: "config_server"
+    container_name: config_server
     image: com.anradev/configserver:0.0.1-SNAPSHOT
     ports:
       - "8071:8071"
-#    environment:
-#      ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
     networks:
       backend:
         aliases:
-          - "configserver"
+          - configserver
   eurekaserver:
-    container_name: "eureka_server"
+    container_name: eureka_server
     image: com.anradev/eurekaserver:0.0.1-SNAPSHOT
     ports:
       - "8070:8070"
@@ -45,19 +43,19 @@ services:
     networks:
       backend:
         aliases:
-          - "eurekaserver"
+          - eurekaserver
   gatewayserver:
-    container_name: "gateway_server"
+    container_name: gateway_server
     image: com.anradev/gatewayserver:0.0.1-SNAPSHOT
     ports:
       - "8072:8072"
     environment:
-      PROFILE: "default"
-      SERVER_PORT: "8072"
-      CONFIGSERVER_URI: "http://configserver:8071"
-      EUREKASERVER_URI: "http://eurekaserver:8070/eureka/"
-      EUREKASERVER_PORT: "8070"
-      CONFIGSERVER_PORT: "8071"
+      PROFILE: default
+      SERVER_PORT: 8072
+      CONFIGSERVER_URI: http://configserver:8071
+      EUREKASERVER_URI: http://eurekaserver:8070/eureka/
+      EUREKASERVER_PORT: 8070
+      CONFIGSERVER_PORT: 8071
     depends_on:
       database:
         condition: service_healthy
@@ -68,9 +66,9 @@ services:
     networks:
       backend:
         aliases:
-          - "gateway"
+          - gateway
   zookeeper:
-    container_name: "zookeeper_server"
+    container_name: zookeeper_server
     image: bitnami/zookeeper:3.6.3
     ports:
       - "2181:2181"
@@ -79,14 +77,14 @@ services:
     networks:
       backend:
         aliases:
-          - "zookeeper"
+          - zookeeper
     healthcheck:
       test: "nc -z localhost 2181 || exit -1"
       interval: 10s
       timeout: 5s
       retries: 3
   kafkaserver:
-    container_name: "kafka_server"
+    container_name: kafka_server
     image: bitnami/kafka:3.1.1
     ports:
       - "9092:9092"
@@ -97,16 +95,16 @@ services:
       - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1
       - ALLOW_PLAINTEXT_LISTENER=yes #for develop only
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       zookeeper:
         condition: service_healthy
     networks:
       backend:
         aliases:
-          - "kafka"
+          - kafka
   redisserver:
-    container_name: "redis_server"
+    container_name: redis_server
     image: bitnami/redis:6.0.16
     ports:
       - "6379:6379"
@@ -115,9 +113,9 @@ services:
     networks:
       backend:
         aliases:
-          - "redis"
+          - redis
   elasticsearch:
-    container_name: "elasticsearch"
+    container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     environment:
       - node.name=elasticsearch
@@ -137,20 +135,20 @@ services:
     networks:
       backend:
         aliases:
-          - "elasticsearch"
+          - elasticsearch
   kibana:
-    container_name: "kibana"
+    container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.7.0
     environment:
-      ELASTICSEARCH_URL: "http://elasticsearch:9300"
+      ELASTICSEARCH_URL: http://elasticsearch:9300
     ports:
       - "5601:5601"
     networks:
       backend:
         aliases:
-          - "kibana"
+          - kibana
   logstash:
-    container_name: "logstash"
+    container_name: logstash
     image: docker.elastic.co/logstash/logstash:7.7.0
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
@@ -160,7 +158,7 @@ services:
     networks:
       backend:
         aliases:
-          - "logstash"
+          - logstash
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin:2.23.18
@@ -168,13 +166,13 @@ services:
       - elasticsearch
     environment:
       - STORAGE_TYPE=elasticsearch
-      - "ES_HOSTS=elasticsearch:9300"
+      - ES_HOSTS=elasticsearch:9300
     ports:
       - "9411:9411"
     networks:
       backend:
         aliases:
-          - "zipkin"
+          - zipkin
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v2.37.0
@@ -185,7 +183,7 @@ services:
     networks:
       backend:
         aliases:
-          - "prometheus"
+          - prometheus
   grafana:
     container_name: grafana
     image: grafana/grafana:9.0.7
@@ -194,10 +192,11 @@ services:
     networks:
       backend:
         aliases:
-          - "grafana"
+          - grafana
   keycloak:
-    container_name: "keycloak"
-    image: bitnami/keycloak:18.0.1
+    container_name: keycloak
+#    image: bitnami/keycloak:18.0.1
+    image: azhvakin/cloud-test-keycloak:latest
     environment:
       KEYCLOAK_ADMIN_USER: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -213,16 +212,15 @@ services:
     networks:
       backend:
         aliases:
-          - "keycloak"
+          - keycloak
   license-service:
-    container_name: "license_service"
+    container_name: license_service
     image: com.anradev/license-service:0.0.1-SNAPSHOT
     environment:
-      PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8071"
-      CONFIGSERVER_PORT: "8071"
-      DATABASESERVER_PORT: "5432"
-#      ENCRYPT_KEY: "IMSYMMETRIC"
+      PROFILE: dev
+      CONFIGSERVER_URI: http://configserver:8071
+      CONFIGSERVER_PORT: 8071
+      DATABASESERVER_PORT: 5432
     depends_on:
       database:
         condition: service_healthy
@@ -233,14 +231,13 @@ services:
     networks:
       - backend
   organizationservice:
-    container_name: "organization_service"
+    container_name: organization_service
     image: com.anradev/organization-service:0.0.1-SNAPSHOT
     environment:
-      PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8071"
-      CONFIGSERVER_PORT: "8071"
-      DATABASESERVER_PORT: "5432"
-#      ENCRYPT_KEY: "IMSYMMETRIC"
+      PROFILE: dev
+      CONFIGSERVER_URI: http://configserver:8071
+      CONFIGSERVER_PORT: 8071
+      DATABASESERVER_PORT: 5432
     depends_on:
       database:
         condition: service_healthy

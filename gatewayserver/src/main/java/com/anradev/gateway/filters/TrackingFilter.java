@@ -13,6 +13,9 @@ import org.springframework.web.server.ServerWebExchange;
 
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @Order(1)
 @Component
 public class TrackingFilter implements GlobalFilter {
@@ -29,12 +32,12 @@ public class TrackingFilter implements GlobalFilter {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
 		if (isCorrelationIdPresent(requestHeaders)) {
-			logger.debug("tmx-correlation-id found in tracking filter: {}. ", 
+			logger.debug("correlation-id found in tracking filter: {}. ",
 					filterUtils.getCorrelationId(requestHeaders));
 		} else {
 			String traceId = getCurrentTraceId();
 			exchange = filterUtils.setCorrelationId(exchange, traceId);
-			logger.debug("tmx-correlation-id generated in tracking filter: {}.", traceId);
+			logger.debug("correlation-id generated in tracking filter: {}.", traceId);
 		}
 		
 		return chain.filter(exchange);

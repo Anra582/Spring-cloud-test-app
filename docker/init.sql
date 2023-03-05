@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS public.licenses
     description text COLLATE pg_catalog."default",
     product_name text COLLATE pg_catalog."default" NOT NULL,
     license_type text COLLATE pg_catalog."default" NOT NULL,
-    comment text COLLATE pg_catalog."default",
     CONSTRAINT licenses_pkey PRIMARY KEY (license_id),
     CONSTRAINT licenses_organization_id_fkey FOREIGN KEY (organization_id)
     REFERENCES public.organizations (organization_id) MATCH SIMPLE

@@ -2,7 +2,9 @@ package com.anradev.licenseservice.controller;
 
 import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.service.LicenseService;
+import com.anradev.licenseservice.utils.UserContext;
 import com.anradev.licenseservice.utils.UserContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.concurrent.TimeoutException;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Slf4j
 @RestController
 @RequestMapping(value="v1/organization/{organizationId}/license")
 public class LicenseController {

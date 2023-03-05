@@ -17,13 +17,7 @@ public class ResponseWrapper {
     private Object metadata;
     private List<ErrorMessage> errors;
 
-    /**
-     * @param data
-     * @param metadata
-     * @param errors
-     */
     public ResponseWrapper(Object data, Object metadata, List<ErrorMessage> errors) {
-        super();
         this.data = data;
         this.metadata = metadata;
         this.errors = errors;

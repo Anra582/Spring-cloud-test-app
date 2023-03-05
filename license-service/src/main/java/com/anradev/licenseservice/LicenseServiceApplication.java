@@ -8,6 +8,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -30,20 +31,13 @@ public class LicenseServiceApplication {
 		return messageSource;
 	}
 
-	@SuppressWarnings("unchecked")
 	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate(){
 		RestTemplate template = new RestTemplate();
-		List interceptors = template.getInterceptors();
-		if (interceptors==null){
-			template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
-		}
-		else{
-			interceptors.add(new UserContextInterceptor());
-			template.setInterceptors(interceptors);
-		}
-
+		List<ClientHttpRequestInterceptor> interceptors = template.getInterceptors();
+		interceptors.add(new UserContextInterceptor());
+		template.setInterceptors(interceptors);
 		return template;
 	}
 }

@@ -1,6 +1,5 @@
 package com.anradev.licenseservice.service;
 
-import com.anradev.licenseservice.config.ServiceConfig;
 import com.anradev.licenseservice.model.License;
 import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.DataCacheRepository;
@@ -39,9 +38,6 @@ public class LicenseService {
     private DataCacheRepository<Organization> organizationRedisRepository;
 
     @Autowired
-    ServiceConfig config;
-
-    @Autowired
     OrganizationFeignClient organizationFeignClient;
 
     @Autowired
@@ -64,7 +60,7 @@ public class LicenseService {
             license.setContactPhone(organization.getContactPhone());
         }
 
-        return license.withComment(config.getExampleProperty());
+        return license;
     }
 
     public Organization getOrganization(String organizationId) {
@@ -102,15 +98,11 @@ public class LicenseService {
 
     public License createLicense(License license){
         license.setLicenseId(UUID.randomUUID().toString());
-        licenseRepository.save(license);
-
-        return license.withComment(config.getExampleProperty());
+        return licenseRepository.save(license);
     }
 
     public License updateLicense(License license){
-        licenseRepository.save(license);
-
-        return license.withComment(config.getExampleProperty());
+        return licenseRepository.save(license);
     }
 
     public String deleteLicense(String licenseId){

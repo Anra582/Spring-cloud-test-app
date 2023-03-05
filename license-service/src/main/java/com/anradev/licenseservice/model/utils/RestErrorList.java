@@ -13,20 +13,15 @@ import static java.util.Arrays.asList;
 @Setter
 public class RestErrorList extends ArrayList<ErrorMessage> {
 
-    /** Generated Serial Version*/
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private static final long serialVersionUID = -721424777198115589L;
-
-    private HttpStatus status;
+ private HttpStatus status;
 
     public RestErrorList(HttpStatus status, ErrorMessage... errors) {
-        this(status.value(), errors);
+        super();
+        this.status = status;
+        addAll(asList(errors));
     }
 
     public RestErrorList(int status, ErrorMessage... errors) {
-        super();
-        this.status = HttpStatus.valueOf(status);
-        addAll(asList(errors));
+        this(HttpStatus.valueOf(status), errors);
     }
 }
