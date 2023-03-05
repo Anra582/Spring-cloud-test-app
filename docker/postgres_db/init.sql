@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS keycloak;
+
 CREATE TABLE IF NOT EXISTS public.organizations
 (
     organization_id text COLLATE pg_catalog."default" NOT NULL,

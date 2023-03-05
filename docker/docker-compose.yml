@@ -2,7 +2,8 @@ version: '2.1'
 services:
   database:
     container_name: postgres_db
-    image: postgres:14-alpine3.15
+#    image: postgres:14-alpine3.15
+    image: azhvakin/spring-cloud-test-db:latest
     ports:
       - "5432:5432"
     environment:
@@ -10,8 +11,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: cloud_test_db
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
-      - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - ././postgres_db/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ././postgres_db/data.sql:/docker-entrypoint-initdb.d/2-data.sql
     networks:
       backend:
         aliases:
@@ -195,8 +196,7 @@ services:
           - grafana
   keycloak:
     container_name: keycloak
-#    image: bitnami/keycloak:18.0.1
-    image: azhvakin/cloud-test-keycloak:latest
+    image: bitnami/keycloak:18.0.1
     environment:
       KEYCLOAK_ADMIN_USER: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -205,7 +205,7 @@ services:
       KEYCLOAK_DATABASE_NAME: cloud_test_db
       KEYCLOAK_DATABASE_USER: postgres
       KEYCLOAK_DATABASE_PASSWORD: postgres
-      KEYCLOAK_DATABASE_SCHEMA: public
+      KEYCLOAK_DATABASE_SCHEMA: keycloak
       KEYCLOAK_HTTP_PORT: 8083
     ports:
       - "8083:8083"
