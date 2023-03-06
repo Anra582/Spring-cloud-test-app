@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "e71f3da6-e7ac-4124-bde1-d22b12056888",
+		"name": "tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12257526"
+	},
+	"item": [
+		{
+			"name": "Anradev's spring cloud test",
+			"item": [
+				{
+					"name": "resilience test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJtT2w5bW5tT1U0Uk9UTXBRY0pWWTJWMi1jZFNuRGs1OVMwZ3JEMXRsaVk4In0.eyJleHAiOjE2NzgwMjUyNjAsImlhdCI6MTY3ODAyNDk2MCwianRpIjoiY2UxMGVhNmEtZDExMy00OTA0LTk1MDUtMWI0MjZiOTE0ZDU2IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODMvcmVhbG1zL2FucmFkZXYtcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTU1NmQ0NjUtNTBkMS00YjQyLTgyYjMtYzY1NTJiNjc0YzEyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYW5yYWRldiIsInNlc3Npb25fc3RhdGUiOiIzYWRmOGEzMC1mYTBmLTQyYjUtOGNjNy05YjQ4ZGI2YzUyZWYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhbnJhZGV2LWFkbWluIiwiZGVmYXVsdC1yb2xlcy1hbnJhZGV2LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYW5yYWRldiI6eyJyb2xlcyI6WyJBRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiM2FkZjhhMzAtZmEwZi00MmI1LThjYzctOWI0OGRiNmM1MmVmIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6ImF6aHZha2luIn0.VtKfrjx4zJaaDzzOd5BEJYczSLhEnN4Z5HDMTxpR6ADjDJAEYAUX3zIQxPu2P2UJuPFjAoDMobcTln09YVFk-dFe9EEV4WnxCsjp2D--HhNLpXFgUBM2nxVPTTpqfrIT9s5s7RUq-ORFwsZwbxeyXkgunIZ_iHMRjqpL5YQzYhgeJgtISDd3ATEWLVvlBEuyCP7IEyeKnh_drTSS14AMfhLGAamjoBOool8_-eCIsUxXmlS0cUuht7sntCEHnm6p0GYPxgx4r93573ihoAOXS-B3zmZu5MwWMaBVn77lgw_0jWu0vlAUN48m2U3J7SOyQnQwiIaOfeYoc2gFpDTHnQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "tmx-correlation-id",
+								"value": "Test-bla-bla-bla",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/organization/d898a142-de44-466c-8c88-9ceb2c2429d3/license/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"organization",
+								"d898a142-de44-466c-8c88-9ceb2c2429d3",
+								"license",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8072/actuator/gateway/routes",
+							"host": [
+								"localhost"
+							],
+							"port": "8072",
+							"path": [
+								"actuator",
+								"gateway",
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gateway organization test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZMWdZUy1hMmJDQmt4WFgySFpnY2lRb05Idnd0cWtheWpZdVBMTnpKdTNvIn0.eyJleHAiOjE2NzcxNjY3NTYsImlhdCI6MTY3NzE2NjQ1NiwianRpIjoiOGNiZWM0MjMtMTU5YS00ZGRlLWI0N2EtMjk5NGQzZjAxZmM5IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODMvcmVhbG1zL2FucmFkZXYtcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmFjZTM4ZDItYjcyOC00MzA2LWFiMGYtNWMwMDgyZTA1ZWM5IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYW5yYWRldiIsInNlc3Npb25fc3RhdGUiOiI0NWZhZTdkZC00MGEzLTQ1YjUtOTNkZC02NmI5MDcxMThiNzUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhbnJhZGV2LWFkbWluIiwiZGVmYXVsdC1yb2xlcy1hbnJhZGV2LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYW5yYWRldiI6eyJyb2xlcyI6WyJBRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiNDVmYWU3ZGQtNDBhMy00NWI1LTkzZGQtNjZiOTA3MTE4Yjc1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6ImF6aHZha2luIn0.IdvOocOrtUVdJVDa53XDeg_romC7PhZ3XRfXFPpPSUWmWx3dGXpyjkBY9O0Ka0CS74byTedn5mt_IsmOXlsTkbWUW2TfvhdrQuCLnmzW_GeIEB26OvX_Tjv-1JlQQbCs2ThBH6W-ahvyFMbR50cKSI-fbMJ4k34i-vWj7RI2LXcrsQuYDZ-8EP2P6EsjOHWO7ot_VbUM4vaD1m1Qpfaza4e1jQZcu7cmmME7TwJ56ESc9Di80POiOTLHKt9GJaZzuuwGO3Yb68wCyRTTt6zCBe25tEFYrq7DyMjEbm37d_ruwti2W7MPxoU714cXSC6bnTeMQi-r_B_80EPJYaeotg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8072/organization/v1/organization/e839ee96-28de-4f67-bb79-870ca89743a0",
+							"host": [
+								"localhost"
+							],
+							"port": "8072",
+							"path": [
+								"organization",
+								"v1",
+								"organization",
+								"e839ee96-28de-4f67-bb79-870ca89743a0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Organization Redis test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJtT2w5bW5tT1U0Uk9UTXBRY0pWWTJWMi1jZFNuRGs1OVMwZ3JEMXRsaVk4In0.eyJleHAiOjE2NzgwMjUyNjAsImlhdCI6MTY3ODAyNDk2MCwianRpIjoiY2UxMGVhNmEtZDExMy00OTA0LTk1MDUtMWI0MjZiOTE0ZDU2IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODMvcmVhbG1zL2FucmFkZXYtcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTU1NmQ0NjUtNTBkMS00YjQyLTgyYjMtYzY1NTJiNjc0YzEyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYW5yYWRldiIsInNlc3Npb25fc3RhdGUiOiIzYWRmOGEzMC1mYTBmLTQyYjUtOGNjNy05YjQ4ZGI2YzUyZWYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhbnJhZGV2LWFkbWluIiwiZGVmYXVsdC1yb2xlcy1hbnJhZGV2LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYW5yYWRldiI6eyJyb2xlcyI6WyJBRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiM2FkZjhhMzAtZmEwZi00MmI1LThjYzctOWI0OGRiNmM1MmVmIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6ImF6aHZha2luIn0.VtKfrjx4zJaaDzzOd5BEJYczSLhEnN4Z5HDMTxpR6ADjDJAEYAUX3zIQxPu2P2UJuPFjAoDMobcTln09YVFk-dFe9EEV4WnxCsjp2D--HhNLpXFgUBM2nxVPTTpqfrIT9s5s7RUq-ORFwsZwbxeyXkgunIZ_iHMRjqpL5YQzYhgeJgtISDd3ATEWLVvlBEuyCP7IEyeKnh_drTSS14AMfhLGAamjoBOool8_-eCIsUxXmlS0cUuht7sntCEHnm6p0GYPxgx4r93573ihoAOXS-B3zmZu5MwWMaBVn77lgw_0jWu0vlAUN48m2U3J7SOyQnQwiIaOfeYoc2gFpDTHnQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8072/license/v1/organization/e839ee96-28de-4f67-bb79-870ca89743a0/license/279709ff-e6d5-4a54-8b55-a5c37542025b/",
+							"host": [
+								"localhost"
+							],
+							"port": "8072",
+							"path": [
+								"license",
+								"v1",
+								"organization",
+								"e839ee96-28de-4f67-bb79-870ca89743a0",
+								"license",
+								"279709ff-e6d5-4a54-8b55-a5c37542025b",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Organization",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIOHctamZHblV2WG1RZDcyWktGRzBocmJ6cW1RR1J3RXhMM24xMG9FVmFzIn0.eyJleHAiOjE2NzcyMzUzNDYsImlhdCI6MTY3NzIzNTA0NiwianRpIjoiZjA1ZDM5MjEtNDg0Ny00NDIxLThjODYtODY2ZTdjMTA5MWJiIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODMvcmVhbG1zL2FucmFkZXYtcmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYzljMDVhY2ItYmE5YS00NDU2LWJjMTYtNGJmZDBiOGE4NmU5IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYW5yYWRldiIsInNlc3Npb25fc3RhdGUiOiI2MjU4ZTA5ZS05NDJjLTRkZDUtOWUwYi00OGU5NmUxNjM1NmIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJhbnJhZGV2LWFkbWluIiwiZGVmYXVsdC1yb2xlcy1hbnJhZGV2LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYW5yYWRldiI6eyJyb2xlcyI6WyJBRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiNjI1OGUwOWUtOTQyYy00ZGQ1LTllMGItNDhlOTZlMTYzNTZiIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInByZWZlcnJlZF91c2VybmFtZSI6ImF6aHZha2luIn0.KmUfBwdebpnbHgqXvJXnrJ7K26Xim4o5ZbD1E0xcsdnL6G3EQmYJLnuzxhMKpId3BENUmi4l_WVRD6B_UiE-m7DtrCV_T3Uznk2zNJn-G-1Wq5Np_of_F-2LedykU6_uJ7v2MlJBDGIB888XkTLNrUD5yj7I6kbCKBAShwmQqANSx4TGOCxbNGWpYy6Vi_-uhZFePBOEmoTmMC0sbcQlBLgLLIuxXdiic8LTpDUDPuVLz3cBYhA16pZofHpB5I5UNaykfQ6nPa-fS1wjivx_eDwMnwjEgaW6NRFXq2JnstYm3ZueySGhjycccqcidPgJcQU6rNeZu3NxpPqNxc6ieA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9fc59e05-0144-4b07-9d52-88a7bb0bf5d9\",\r\n    \"name\": \"Anradev\",\r\n    \"contactName\": \"Changed Name\",\r\n    \"contactEmail\": \"anra582@gmail.com\",\r\n    \"contactPhone\": \"8-800-555-55-55\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8072/organization/v1/organization/9fc59e05-0144-4b07-9d52-88a7bb0bf5d9",
+							"host": [
+								"localhost"
+							],
+							"port": "8072",
+							"path": [
+								"organization",
+								"v1",
+								"organization",
+								"9fc59e05-0144-4b07-9d52-88a7bb0bf5d9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get token from keycloak",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "anradev",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "rcu8bFeihwCJNE1KzWu6xwkLNdVWsd1W",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Azhvakin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8083/realms/anradev-realm/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"realms",
+								"anradev-realm",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh access token via refresh token",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
