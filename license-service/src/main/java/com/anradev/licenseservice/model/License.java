@@ -1,12 +1,11 @@
 package com.anradev.licenseservice.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
-
-import javax.persistence.*;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -15,7 +14,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @ToString
 @Entity
 @Table(name="licenses")
-@JsonInclude(NON_NULL)
+@JsonInclude(value = NON_NULL)
 public class License extends RepresentationModel<License> {
 
     @Id

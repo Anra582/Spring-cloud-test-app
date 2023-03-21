@@ -3,15 +3,13 @@ package com.anradev.licenseservice.controller;
 import com.anradev.licenseservice.model.utils.ErrorMessage;
 import com.anradev.licenseservice.model.utils.ResponseWrapper;
 import com.anradev.licenseservice.model.utils.RestErrorList;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Collections.singletonMap;
 
@@ -27,7 +25,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseWrapper> handleException(HttpServletRequest request,
-                                                                         ResponseWrapper responseWrapper){
+                                                           ResponseWrapper responseWrapper){
         return ResponseEntity.ok(responseWrapper);
     }
 

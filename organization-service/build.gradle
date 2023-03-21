@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.6'
+	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
@@ -19,7 +19,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2021.0.2")
+	set('springCloudVersion', "2022.0.1")
 }
 
 dependencies {
@@ -31,11 +31,12 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-stream'
 	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
-	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+//	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 	implementation 'net.logstash.logback:logstash-logback-encoder:7.2'
-	implementation 'org.keycloak:keycloak-spring-boot-starter:19.0.1'
-	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.3'
+	implementation 'org.keycloak.bom:keycloak-adapter-bom:21.0.1'
+	implementation 'org.keycloak:keycloak-spring-boot-starter:21.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'org.postgresql:postgresql'
 	compileOnly 'org.projectlombok:lombok'

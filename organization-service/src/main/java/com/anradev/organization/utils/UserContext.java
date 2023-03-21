@@ -1,14 +1,12 @@
 package com.anradev.organization.utils;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserContext {
     public static final String CORRELATION_ID = "correlation-id";
-    public static final String AUTH_TOKEN     = "auth-token";
+    public static final String AUTH_TOKEN     = "Authorization";
     public static final String USER_ID        = "user-id";
     public static final String ORGANIZATION_ID = "organization-id";
 

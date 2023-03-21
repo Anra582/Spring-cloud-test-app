@@ -3,6 +3,7 @@ package com.anradev.licenseservice.service.client;
 import com.anradev.licenseservice.model.Organization;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,5 +14,6 @@ public interface OrganizationFeignClient {
             method= RequestMethod.GET,
             value="/v1/organization/{organizationId}",
             consumes="application/json")
-    Organization getOrganization(@PathVariable("organizationId") String organizationId);
+    Organization getOrganization(@RequestHeader(value = "Authorization") String authorizationHeader,
+                                 @PathVariable("organizationId") String organizationId);
 }
