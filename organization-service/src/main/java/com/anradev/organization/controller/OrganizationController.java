@@ -29,7 +29,6 @@ public class OrganizationController {
     @RequestMapping(value="/{organizationId}",method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOrganization(@PathVariable("organizationId") String id, @RequestBody Organization organization) {
-        log.debug("we are inside the update method");
         service.update(organization);
     }
 

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,8 @@ public class TrackingFilter implements GlobalFilter {
 	@Autowired
 	FilterUtils filterUtils;
 
-//	@Autowired
-//	Tracer tracer;
+	@Autowired
+	Tracer tracer;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -30,8 +31,8 @@ public class TrackingFilter implements GlobalFilter {
 			logger.debug("correlation-id found in tracking filter: {}. ",
 					filterUtils.getCorrelationId(requestHeaders));
 		} else {
-//			String traceId = getCurrentTraceId();
-			String traceId = "test trace id";
+			String traceId = getCurrentTraceId();
+//			String traceId = "test trace id";
 			exchange = filterUtils.setCorrelationId(exchange, traceId);
 			logger.debug("correlation-id generated in tracking filter: {}.", traceId);
 		}
@@ -44,16 +45,16 @@ public class TrackingFilter implements GlobalFilter {
 		return filterUtils.getCorrelationId(requestHeaders) != null;
 	}
 
-//	private String getCurrentTraceId() {
-//		String traceId = "";
-//		try {
-//			traceId = tracer.currentSpan().context().traceId();
-//		}
-//		catch (Exception e) {
-//			logger.warn("tmx-correlation-id generated empty. Cannot get traceId of current Sleuth context: {}",
-//					e.getMessage());
-//		}
-//		return traceId;
-//	}
+	private String getCurrentTraceId() {
+		String traceId = "";
+		try {
+			traceId = tracer.currentSpan().context().traceId();
+		}
+		catch (Exception e) {
+			logger.warn("tmx-correlation-id generated empty. Cannot get traceId of current Sleuth context: {}",
+					e.getMessage());
+		}
+		return traceId;
+	}
 
 }
