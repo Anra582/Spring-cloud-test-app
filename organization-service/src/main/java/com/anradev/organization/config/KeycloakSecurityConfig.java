@@ -36,9 +36,6 @@ public class KeycloakSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                //.antMatchers("/anonymous").permitAll()
-                //.antMatchers("/user").hasAnyRole("user")
-                //.antMatchers("/admin").hasAnyRole("admin")
                 .anyRequest()
                 .permitAll();
         http.csrf().disable();

@@ -21,8 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping(value="v1/organization/{organizationId}/license")
 public class LicenseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LicenseController.class);
-
     @Autowired
     private LicenseService licenseService;
 

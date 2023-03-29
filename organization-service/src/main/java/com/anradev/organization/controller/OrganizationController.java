@@ -18,7 +18,6 @@ public class OrganizationController {
     @Autowired
     private OrganizationService service;
 
-
     @RolesAllowed({"ADMIN", "USER"})
     @RequestMapping(value="/{organizationId}",method = RequestMethod.GET)
     public ResponseEntity<Organization> getOrganization(@PathVariable("organizationId") String organizationId) {

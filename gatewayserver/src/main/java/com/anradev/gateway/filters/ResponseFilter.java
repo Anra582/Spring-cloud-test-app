@@ -1,6 +1,7 @@
 package com.anradev.gateway.filters;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Component
 public class ResponseFilter {
- 
-    private static final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
 
     @Autowired
 	FilterUtils filterUtils;
@@ -23,9 +23,9 @@ public class ResponseFilter {
         return (exchange, chain) -> chain.filter(exchange).then(Mono.fromRunnable(() -> {
               HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
               String correlationId = filterUtils.getCorrelationId(requestHeaders);
-              logger.debug("Adding the correlation id to the outbound headers. {}", correlationId);
+              log.debug("Adding the correlation id to the outbound headers. {}", correlationId);
               exchange.getResponse().getHeaders().add(FilterUtils.CORRELATION_ID, correlationId);
-              logger.debug("Completing outgoing request for {}.", exchange.getRequest().getURI());
+              log.debug("Completing outgoing request for {}.", exchange.getRequest().getURI());
           }));
     }
 }
