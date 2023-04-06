@@ -2,6 +2,7 @@ package com.anradev.licenseservice.repository;
 
 import com.anradev.licenseservice.service.LicenseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.TimeZone;
 
+@Slf4j
 @Repository
 @Qualifier("OrganizationRedisRepository")
 public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
-
-    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;
@@ -28,7 +28,6 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
         OBJECT_MAPPER.setTimeZone(DEFAULT_TIMEZONE);
     }
 
-
     @Override
     public boolean add(String collection, String hkey, T object) {
         try {
@@ -36,7 +35,7 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
             redisTemplate.opsForHash().put(collection, hkey, jsonObject);
             return true;
         } catch (Exception e) {
-            logger.error("Unable to add object of key {} to cache collection '{}' : {}",
+            log.error("Unable to add object of key {} to cache collection '{}' : {}",
                     hkey, collection , e.getMessage());
             return false;
         }
@@ -48,7 +47,7 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
             redisTemplate.opsForHash().delete(collection, hkey);
             return true;
         } catch (Exception e) {
-            logger.error("Unable to delete entry {} from cache collection '{}' : {}",
+            log.error("Unable to delete entry {} from cache collection '{}' : {}",
                     hkey, collection , e.getMessage());
             return false;
         }
@@ -60,7 +59,7 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
             String jsonObject = String.valueOf(redisTemplate.opsForHash().get(collection, hkey));
             return OBJECT_MAPPER.readValue(jsonObject, tClass);
         } catch (Exception e) {
-            logger.error("Unable to find entry '{}' in cache collection '{}' : {}" ,
+            log.error("Unable to find entry '{}' in cache collection '{}' : {}" ,
                     hkey, collection, e.getMessage());
             return null;
         }
@@ -71,7 +70,7 @@ public class OrganizationRedisRepository<T> implements DataCacheRepository<T> {
         try {
             return redisTemplate.getConnectionFactory().getConnection().ping() != null;
         } catch (Exception e) {
-            logger.warn("Redis server is not available at this moment. Try later");
+            log.warn("Redis server is not available at this moment. Try later");
             return false;
         }
     }

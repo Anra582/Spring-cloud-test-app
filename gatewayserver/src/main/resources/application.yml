@@ -3,6 +3,9 @@ spring:
     name: gateway-server
   config:
     import: optional:configserver:http://configserver:8071
+  sleuth:
+    propagation:
+      type: w3c, b3
 logging:
   level:
     com.netflix: WARN

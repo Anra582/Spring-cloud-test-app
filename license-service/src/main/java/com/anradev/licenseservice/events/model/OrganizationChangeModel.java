@@ -12,5 +12,4 @@ public class OrganizationChangeModel {
     private String action;
     private String organizationId;
     private String correlationId;
-
 }

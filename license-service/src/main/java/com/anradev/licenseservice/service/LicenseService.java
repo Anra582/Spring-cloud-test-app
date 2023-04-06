@@ -5,12 +5,13 @@ import com.anradev.licenseservice.model.Organization;
 import com.anradev.licenseservice.repository.DataCacheRepository;
 import com.anradev.licenseservice.repository.LicenseRepository;
 import com.anradev.licenseservice.service.client.OrganizationFeignClient;
-import com.anradev.licenseservice.service.client.OrganizationRestClient;
 import com.anradev.licenseservice.utils.UserContext;
+import com.anradev.licenseservice.utils.UserContextHolder;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
+@Slf4j
 @Service
 public class LicenseService {
 
@@ -39,12 +41,6 @@ public class LicenseService {
 
     @Autowired
     OrganizationFeignClient organizationFeignClient;
-
-    @Autowired
-    OrganizationRestClient organizationRestClient;
-
-    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
-
 
     public License getLicense(String licenseId, String organizationId){
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
@@ -64,16 +60,16 @@ public class LicenseService {
     }
 
     public Organization getOrganization(String organizationId) {
-        logger.debug("In Licensing Service.getOrganization: {}", UserContext.getCorrelationId());
+        log.debug("In Licensing Service.getOrganization: {}", UserContext.getCorrelationId());
 
         Organization organization = checkRedisCache(organizationId);
 
         if (organization != null){
-            logger.debug("I have successfully retrieved an organization {} from the redis cache: {}", organizationId, organization);
+            log.debug("I have successfully retrieved an organization {} from the redis cache: {}", organizationId, organization);
             return organization;
         }
 
-        logger.debug("Unable to locate organization from the redis cache: {}.", organizationId);
+        log.debug("Unable to locate organization from the redis cache: {}.", organizationId);
 
         organization = retrieveOrganizationInfo(organizationId);
 
@@ -84,8 +80,8 @@ public class LicenseService {
     }
 
     private Organization retrieveOrganizationInfo(String organizationId) {
-//        return organizationFeignClient.getOrganization(organizationId);
-        return organizationRestClient.getOrganization(organizationId);
+        String authToken = UserContextHolder.getContext().getAuthToken();
+        return organizationFeignClient.getOrganization(authToken, organizationId);
     }
 
     private Organization checkRedisCache(String organizationId) {
@@ -134,7 +130,7 @@ public class LicenseService {
             Thread.sleep(5000);
             throw new java.util.concurrent.TimeoutException();
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 

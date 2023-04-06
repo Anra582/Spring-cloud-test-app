@@ -11,6 +11,8 @@ logging:
     com.netflix: WARN
     org.springframework.web: WARN
     com.anradev: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 
 resilience4j:
   circuitbreaker:

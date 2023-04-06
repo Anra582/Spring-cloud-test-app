@@ -18,7 +18,6 @@ public class OrganizationController {
     @Autowired
     private OrganizationService service;
 
-
     @RolesAllowed({"ADMIN", "USER"})
     @RequestMapping(value="/{organizationId}",method = RequestMethod.GET)
     public ResponseEntity<Organization> getOrganization(@PathVariable("organizationId") String organizationId) {
@@ -29,7 +28,6 @@ public class OrganizationController {
     @RequestMapping(value="/{organizationId}",method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOrganization(@PathVariable("organizationId") String id, @RequestBody Organization organization) {
-        log.debug("we are inside the update method");
         service.update(organization);
     }
 
